@@ -1,20 +1,32 @@
 from random import *
 class Saper():
-    def __init__(self, size_x, size_y, mine_count):
-        self.size_x = size_x
-        self.size_y = size_y
-        self.mine_count = mine_count
-    def data_check(self):
-        size_x = self.size_x
-        size_y = self.size_y
-        mine_count = self.mine_count
-        if size_x < 1 or size_y < 1 or mine_count < 1:
+    def play(self):
+        while True:
+            self.temp_data = input("Введіть коордінати Х та У та коло-во мін через кому\n").split(",")
+            if len(self.temp_data) != 3:
+                print("має бути три параметри")
+                continue
+            elif self.temp_data[0].isdigit() != True or self.temp_data[1].isdigit() != True or self.temp_data[2].isdigit() != True:
+                print("Данні мають бути цифрами")
+                continue
+            else:
+                break
+        self.__data_check(self.temp_data)
+        self.__build_mine_field()
+        self.__build_game_field()
+        print(*self.game_field,sep ="\n")
+        self.__main_game()
+    def __data_check(self, temp_data):
+        self.size_x = int(temp_data[0])
+        self.size_y = int(temp_data[1])
+        self.mine_count = int(temp_data[2])
+        if self.size_x < 1 or self.size_y < 1 or self.mine_count < 1:
             print("Поля та коло-во мін мають бути більше за 1!")
-        elif mine_count > size_y * size_x :
-            print("Коло-во мін не може бути більше,ніж",self.size_x * self.size_y,"!")
+        elif self.mine_count > self.size_y * self.size_x:
+            print("Коло-во мін не може бути більше,ніж", self.size_x * self.size_y, "!")
         else:
-            return True
-    def build_mine_field(self):
+            return self.size_x, self.size_y, self.mine_count
+    def __build_mine_field(self):
         self.field = []
         self.counter_mines = 0
         for i in range(self.size_y):
@@ -32,14 +44,14 @@ class Saper():
             else:
                 self.counter_mines = 0
         return self.field
-    def build_game_field(self):
+    def __build_game_field(self):
         self.game_field = []
         for i in range(self.size_y):
             self.game_field.append([])
             for j in range(self.size_x):
                 self.game_field[i].append("-")
         return self.game_field
-    def play(self):
+    def __main_game(self):
         self.total_step_counter = self.size_x * self.size_y - self.mine_count
         self.used_cord = []
         while True:
@@ -99,12 +111,4 @@ class Saper():
                     print(*self.field, sep="\n")
                     break
                 print(*self.game_field, sep="\n")
-
-a1 = Saper(2,2,1)
-if a1.data_check() == True:
-    a1.build_mine_field()
-    print(*a1.field,sep="\n") # це для отладки
-    print("\n")
-    print(*a1.build_game_field(), sep="\n")
-    a1.play()
-
+Saper().play()
