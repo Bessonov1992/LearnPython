@@ -16,6 +16,17 @@ class Saper():
         self.__build_game_field()
         print(*self.game_field,sep ="\n")
         self.__main_game()
+        while True:
+            self.try_again = input("Бажаєте спробувати ще раз?Введіть 'так' або 'ні'\n")
+            if self.try_again not in ('так','ні'):
+                print("Введіть 'так' або 'ні'\n")
+                continue
+            else:
+                if self.try_again == 'ні':
+                    break
+                else:
+                    Saper().play()
+                break
     def __data_check(self, temp_data):
         self.size_x = int(temp_data[0])
         self.size_y = int(temp_data[1])
@@ -102,7 +113,6 @@ class Saper():
                         elif y > self.size_y - 1:
                             continue
                         self.tmp_field.append(self.field[y][x])
-
                 for i in self.tmp_field:
                     if i == "*":
                         self.counter += 1
