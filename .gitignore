@@ -2,3 +2,5 @@
 venv/Lib
 .idea/LearnPython.iml
 .idea/misc.xml
+.idea
+venv/Scriptsgit
