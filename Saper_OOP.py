@@ -2,7 +2,7 @@ from random import *
 class Saper():
     def play(self):
         while True:
-            self.temp_data = input("Введіть коордінати Х та У та коло-во мін через кому\n").split(",")
+            self.temp_data = input("Введіть ширину поля,висоту поля та коло-во мін через кому\n").split(",")
             if len(self.temp_data) != 3:
                 print("має бути три параметри")
                 continue
@@ -22,8 +22,10 @@ class Saper():
         self.mine_count = int(temp_data[2])
         if self.size_x < 1 or self.size_y < 1 or self.mine_count < 1:
             print("Поля та коло-во мін мають бути більше за 1!")
+            Saper().play()
         elif self.mine_count > self.size_y * self.size_x:
             print("Коло-во мін не може бути більше,ніж", self.size_x * self.size_y, "!")
+            Saper().play()
         else:
             return self.size_x, self.size_y, self.mine_count
     def __build_mine_field(self):
